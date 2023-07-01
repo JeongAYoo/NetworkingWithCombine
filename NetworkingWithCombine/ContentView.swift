@@ -8,14 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    // MARK: - Properties
+    
+    @State var name = ""
+    @StateObject var viewModel = ViewModel()
+    
+    // MARK: - Body
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack(spacing: 25) {
+            TextField("이름을 입력하세요.", text: $name)
+                .submitLabel(.done)
+                .frame(height: 48)
+                .background(Color(.systemGroupedBackground))
+                .onSubmit {
+                    viewModel.submitUsername(username: name)
+                }
+            
+            Button {
+                viewModel.submitUsername(username: name)
+
+            } label: {
+                Text("제출")
+                    .foregroundColor(.white)
+                    .frame(height: 48)
+                    .frame(maxWidth: .infinity)
+            }
+            .background(.black)
+
         }
-        .padding()
+        .padding(.horizontal)
     }
 }
 
